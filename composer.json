@@ -9,6 +9,7 @@
           "email": "rolandassale@gmail.com"
         }
     ],
+    "bin": ["src/bin/deploy"],
     "minimum-stability": "stable",
     "require": {
     }
