@@ -10,12 +10,30 @@
     dest: "/etc/nginx/sites-available/default"
     force: no
 
+- name: Create log directory
+  file:
+    path: "/home/{{ user }}/logs/nginx/{{ domain }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ remote_server_user }}"
+    recurse: yes
+
+- name: Create log files
+  file:
+    path: "/home/{{ user }}/logs/nginx/{{ domain }}/{{ item }}.log"
+    state: touch
+    owner: "{{ user }}"
+    group: "{{ remote_server_user }}"
+  with_items:
+    - access
+    - error
+
 - name: "Copy nginx config file {{ domain }}"
   become: yes
   template:
     src: "{{ playbooks_directory_path }}/templates/vhost.j2"
     dest: "/etc/nginx/sites-available/{{ domain }}"
-    force: no
+    force: yes # changer à no apres
 
 - name: "Create symlink {{ domain }}"
   become: yes

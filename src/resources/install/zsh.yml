@@ -9,6 +9,14 @@
     path: "/home/{{ user }}/.zshrc"
   register: zshrc_file
 
+# si le .zshrc n'existe pas, il faudra en mettre un par le ssteme de template
+- name: Copy my .zshrc
+  template:
+    src: "{{ playbooks_directory_path }}/templates/zsh.j2"
+    dest: "/home/{{ user }}/.zshrc"
+    owner: "{{ user }}"
+  when: not zshrc_file.stat.exists
+
 - name: Check if .oh-my-zsh exists
   stat:
     path: "/home/{{ user }}/.oh-my-zsh"
@@ -20,12 +28,20 @@
   register: zsh_autosuggestions
 
 - name: Install oh-my-zsh
-  become_user: "{{ user }}"
-  shell:
-    cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-  args:
-    chdir: "/home/{{ user }}"
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: "/home/{{ user }}/.oh-my-zsh"
+    force: no
   when: not stat_oh_my_zsh_result.stat.exists
+
+# - name: Install oh-my-zsh
+#   become: no
+#   become_user: "{{ user }}"
+#   shell:
+#     cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+#   args:
+#     chdir: "/home/{{ user }}"
+#   when: not stat_oh_my_zsh_result.stat.exists
 
 
 - name: Clone du module autosuggestions
