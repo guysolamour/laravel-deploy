@@ -1,6 +1,7 @@
 
 ---
 - name: "Update chown to {{ user }}:{{ remote_server_user }}"
+  become: yes
   file:
     path: "{{ ansistrano_deploy_to }}"
     state: directory
@@ -10,6 +11,7 @@
     recurse: yes
 
 - name: "Change bootstrap cache folder permission and ownner"
+  become: yes
   file:
     path: "{{ ansistrano_release_path.stdout }}/bootstrap/cache"
     state: directory
@@ -20,6 +22,7 @@
     recurse: yes
 
 - name: "Change storage folder permission and ownner"
+  become: yes
   file:
     path: "{{ ansistrano_shared_path }}/storage"
     state: directory

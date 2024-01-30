@@ -1,5 +1,6 @@
 ---
 - name: Create storage directory
+  become: yes
   file:
     path: "{{ item }}"
     mode: '0775'
@@ -7,8 +8,8 @@
     owner: "{{ user }}"
     group: "{{ remote_server_user }}"
   with_items:
-    - "{{ ansistrano_shared_path }}/storage/app/public"
     - "{{ ansistrano_shared_path }}/storage/framework/cache"
+    - "{{ ansistrano_shared_path }}/storage/app/public"
     - "{{ ansistrano_shared_path }}/storage/framework/cache/data"
     - "{{ ansistrano_shared_path }}/storage/framework/sessions"
     - "{{ ansistrano_shared_path }}/storage/framework/testing"

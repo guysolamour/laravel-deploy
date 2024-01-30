@@ -21,8 +21,8 @@ server {
 
     error_page 404 /index.php;
 
-    access_log /home/{{ user }}/{{ domain }}/log/access.log;
-    error_log  /home/{{ user }}/{{ domain }}/log/error.log;
+    access_log /home/{{ user }}/logs/nginx/{{ domain }}/access.log;
+    error_log /home/{{ user }}/logs/nginx/{{ domain }}/error.log;
 
     {% if php_version %}
     location ~ \.php$ {

@@ -1,12 +1,14 @@
 ---
 - name: Install node dependencies
   command: npm install
+  ignore_errors: yes
   args:
     chdir: "{{ ansistrano_release_path.stdout }}"
   when: build_javascript == 'true' or build_javascript == 'yes'
 
 - name: Build node assets
   command: npm run prod
+  ignore_errors: yes
   args:
     chdir: "{{ ansistrano_release_path.stdout }}"
   when: build_javascript == 'true' or build_javascript == 'yes'

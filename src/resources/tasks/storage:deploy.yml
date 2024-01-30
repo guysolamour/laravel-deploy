@@ -14,17 +14,25 @@
   - name: Include variables
     include_vars: "{{ playbooks_directory_path }}/variables/storage.yml"
 
+
+  # - debug:
+  #     var: local_storage_folder
+
+
+
   - name: Zip host storage folder
     become_user: "{{ remote_default_user }}"
     archive:
       path: "{{ local_storage_folder }}"
-      dest: "{{ dump_path }}"
+      dest: "{{ local_dump_path }}"
       format: zip
     delegate_to: localhost
 
+  # - meta: end_play
+
   - name: Copy file from remote to host
     copy:
-      src: "{{ dump_path }}"
+      src: "{{ local_dump_path }}"
       dest: "{{ current_realease_path }}"
       owner: "{{ user }}"
       group: "{{ remote_server_user }}"
@@ -56,6 +64,6 @@
   - name: Delete host archive
     become_user: "{{ remote_default_user }}"
     file:
-      path: "{{ dump_path }}"
+      path: "{{ local_dump_path }}"
       state: absent
     delegate_to: localhost

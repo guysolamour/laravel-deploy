@@ -5,6 +5,7 @@
 
 - name: "Optimize laravel installation"
   shell: "php{{ php_version }} artisan {{ item.command }}"
+  ignore_errors: yes
   args:
     chdir: "{{ realease_path }}"
   with_items:
