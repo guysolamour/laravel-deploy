@@ -18,16 +18,16 @@
     - { command: "view:cache" }
     - { command: "optimize" }
 
-- name: Horizon Publish
+- name: Horizon Publish # will not run if horizon package was not installed
   shell: "php{{ php_version }} artisan horizon:publish"
-  ignore_errors: yes # will not run if horizon package was not installed
+  ignore_errors: yes
   args:
     chdir: "{{ realease_path }}"
   when: horizon == 'yes' or horizon == 'true'
 
-- name: Telescope Publish
+- name: Telescope Publish  # will not run if telescope package was not installed
   shell: "php{{ php_version }} artisan telescope:publish"
-  ignore_errors: yes # will not run if telescope package was not installed
+  ignore_errors: yes
   args:
     chdir: "{{ realease_path }}"
   when: telescope == 'yes' or telescope == 'true'

@@ -33,7 +33,7 @@
   template:
     src: "{{ playbooks_directory_path }}/templates/vhost.j2"
     dest: "/etc/nginx/sites-available/{{ domain }}"
-    force: yes # changer à no apres
+    force: no
 
 - name: "Create symlink {{ domain }}"
   become: yes
